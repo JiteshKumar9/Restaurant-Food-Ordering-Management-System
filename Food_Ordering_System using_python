@@ -1,0 +1,105 @@
+class MenuItem:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+class Restaurant:
+    def __init__(self, name):
+        self.name = name
+        self.menu = []
+
+    def add_item(self, item):
+        self.menu.append(item)
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.cart = []
+
+    def add_to_cart(self, item):
+        self.cart.append(item)
+
+# Create Restaurants
+restaurant1 = Restaurant("Restaurant A")
+restaurant2 = Restaurant("Restaurant B")
+
+
+# Add menu item to the restaurants
+restaurant1.add_item(MenuItem("Kalakhand 5pcs", 50))
+restaurant1.add_item(MenuItem("Kaju Katli 5pcs", 60))
+restaurant1.add_item(MenuItem("Jalebi 5pcs", 30))
+restaurant1.add_item(MenuItem("Gulab Jamun 5pcs", 30))
+restaurant1.add_item(MenuItem("Rasugulla 5pcs", 40))
+restaurant1.add_item(MenuItem("Egg Bhurji with 4 Roti", 50))
+restaurant1.add_item(MenuItem("Egg Fried Rice", 70))
+restaurant1.add_item(MenuItem("Chicken Rice", 90))
+restaurant1.add_item(MenuItem("Chicken Curry with 4 Naan", 100))
+restaurant1.add_item(MenuItem("Fish Curry with 5 Roti", 120))
+restaurant1.add_item(MenuItem("Idli with coconut chutney and sambhar", 50))
+restaurant1.add_item(MenuItem("Vada with coconut and ginger chutney", 40))
+restaurant1.add_item(MenuItem("Plain Dosa with coconut chutney and sambhar", 30))
+restaurant1.add_item(MenuItem("Bajji with coconut and Ginger chutney", 40))
+restaurant2.add_item(MenuItem("Masala Dosa with coconut chutney and sambhar", 50))
+restaurant2.add_item(MenuItem("Puri with coconut chutney and Potato curry", 50))
+restaurant2.add_item(MenuItem("Paneer Curry with 4 Naan", 80))
+restaurant2.add_item(MenuItem("Chole Bhature", 50))
+restaurant2.add_item(MenuItem("Aloo Puri with salad", 40))
+restaurant2.add_item(MenuItem("Kheer Puri with Mixveg curry",60))
+restaurant2.add_item(MenuItem("Aloo gobi aur Bhindi curry with Roti and Naan", 80))
+restaurant2.add_item(MenuItem("South Indian Thali", 80))
+restaurant2.add_item(MenuItem("Punjabi Thali", 85))
+restaurant2.add_item(MenuItem("Kathiyawadi Thali",70))
+restaurant2.add_item(MenuItem("Rajasthani Thali",75))
+restaurant2.add_item(MenuItem("Jain Thali",60))
+# Simulate user interaction
+while True:
+    print("Welcome to JK Foodzs")
+    user_name = input("Enter your name: ")
+    user = User(user_name)
+
+    print("\nAvailable Restaurants: ")
+    print("1. Restaurant A")
+    print("2. Restaurant B")
+    #print("3. Restaurant C")
+    #print("4. Restaurant D")
+    #print("5. Restaurant E")
+
+    # Allow user to select a restaurant
+    restaurant_choice = int(input("Enter the number of the restaurant you want to order from: "))
+    selected_restaurant = restaurant1 if restaurant_choice == 1 else restaurant2
+    
+
+    print(f"\nMenu of {selected_restaurant.name}: ")
+    for idx, item in enumerate(selected_restaurant.menu, start=1):
+        print(f"{idx}. {item.name} - ${item.price}")
+
+    # Allow the user to add items to their cart
+    while True:
+        item_choice = input("Enter the number of the item you want to add to the cart (or 'done' to finish): ")
+        if item_choice.lower() == 'done':
+            break
+
+        try:
+            idx = int(item_choice)
+            if 1 <= idx <= len(selected_restaurant.menu):
+                selected_item = selected_restaurant.menu[idx - 1]
+                user.add_to_cart(selected_item)
+                print(f"{selected_item.name} added to the cart!")
+            else:
+                print("Invalid item number. Please try again.")
+        except ValueError:
+            print("Invalid input. Please enter a number or 'done'.")
+
+    # Display the user's cart and total
+    total = sum(item.price for item in user.cart)
+    print(f"\n{user.name}'s Cart")
+    for item in user.cart:
+        print(f"{item.name}: ${item.price}")
+    print(f"Your Total amount is: ${total}")
+    print("Would you like to pay with \"Cash Payment\" or \"Online Payment (1,2)")
+    pay_option=int(input())
+    if pay_option==1:
+        print("Great!Plaease pay your cash at the counter")
+    elif pay_option==2:
+        print("Scan the QR in our shop to pay online")
+    print("Thankyou !! Visit Again!!")
